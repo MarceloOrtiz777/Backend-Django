@@ -1,0 +1,27 @@
+# Entorno virtual
+venv/
+env/
+*.venv/
+
+# Variables de entorno (contiene datos sensibles, NUNCA se sube)
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Django
+db.sqlite3
+db_test_temporal.sqlite3
+*.log
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Node (por si se usó npm para instalar Bootstrap localmente)
+node_modules/
+package-lock.json
