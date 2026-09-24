@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes - Listado{% endblock %}
+{% block header %}Listado de Clientes{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Datos obtenidos desde la base de datos mediante Django ORM.</p>{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form class="d-flex" role="search" action="#" method="get">
+        <input class="form-control me-2" type="search" placeholder="Buscar cliente..." aria-label="Buscar">
+        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+    </form>
+    <a href="#" class="btn btn-success">+ Agregar cliente</a>
+</div>
+
+<div class="row g-3">
+    {% for cliente in clientes %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ cliente.nombre }} {{ cliente.apellidos }}</h5>
+                <p class="card-text mb-1"><strong>Email:</strong> {{ cliente.email }}</p>
+                <p class="card-text mb-1"><strong>Teléfono:</strong> {{ cliente.telefono|default:"No informado" }}</p>
+                <p class="card-text mb-2"><strong>Registrado:</strong> {{ cliente.fecha_registro }}</p>
+
+                <p class="card-text mb-1"><strong>Pedidos:</strong> {{ cliente.pedidos.count }}</p>
+                {% if cliente.pedidos.all %}
+                <ul class="list-group list-group-flush mb-2">
+                    {% for pedido in cliente.pedidos.all %}
+                    <li class="list-group-item px-0 small">
+                        {{ pedido.cantidad }} x {{ pedido.producto.nombre }} (${{ pedido.total }})
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-white border-top-0 d-flex justify-content-end gap-2">
+                <a href="#" class="btn btn-sm btn-outline-primary">Modificar</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No hay clientes registrados.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Clientes - Inicio{% endblock %}
+{% block header %}Gestión de Clientes{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Clientes registrados y sus pedidos, almacenados en base de datos.</p>{% endblock %}
+
+{% block content %}
+<div class="row align-items-center g-4">
+    <div class="col-md-6 order-md-2">
+        <img src="{% static 'images/clientes.jpg' %}" alt="Clientes" class="img-fluid rounded shadow-sm">
+    </div>
+    <div class="col-md-6 order-md-1">
+        <p>
+            Bienvenido al módulo de <strong>Clientes</strong>. Aquí puedes consultar el listado de clientes
+            registrados y revisar los pedidos asociados a cada uno.
+        </p>
+        <p>
+            Actualmente hay <strong>{{ total_clientes }}</strong> clientes registrados en la base de datos.
+        </p>
+        <a href="{% url 'home_clientes_listado' %}" class="btn btn-success">Ver clientes</a>
+    </div>
+</div>
+{% endblock %}

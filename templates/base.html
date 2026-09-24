@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sitio Web Modular{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">Sitio Modular</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/invent/">Inventario - Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/invent/productos/">Inventario - Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/clientes/">Clientes - Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/clientes/clientes/">Clientes - Listado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/">Django Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-light border-bottom py-4">
+        <div class="container">
+            <h1 class="mb-0">{% block header %}Bienvenido{% endblock %}</h1>
+            {% block subheader %}{% endblock %}
+        </div>
+    </header>
+
+    <main class="container my-4 flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-dark text-white-50 py-3 mt-auto">
+        <div class="container text-center small">
+            &copy; 2026 Sitio Web Modular &mdash; Evaluación Sumativa #2, Programación Back End (TI3041)
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

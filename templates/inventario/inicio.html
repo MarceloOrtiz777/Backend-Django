@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inventario - Inicio{% endblock %}
+{% block header %}Gestión de Inventario{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Control y visualización de productos disponibles, almacenados en base de datos.</p>{% endblock %}
+
+{% block content %}
+<div class="row align-items-center g-4">
+    <div class="col-md-6">
+        <img src="{% static 'images/inventario.jpg' %}" alt="Inventario" class="img-fluid rounded shadow-sm">
+    </div>
+    <div class="col-md-6">
+        <p>
+            Bienvenido al módulo de <strong>Inventario</strong>. Aquí puedes consultar el listado completo
+            de productos disponibles, junto con su categoría, precio y stock actual.
+        </p>
+        <p>
+            Actualmente hay <strong>{{ total_productos }}</strong> productos registrados en la base de datos.
+        </p>
+        <a href="{% url 'productos' %}" class="btn btn-primary">Ver productos</a>
+    </div>
+</div>
+{% endblock %}
