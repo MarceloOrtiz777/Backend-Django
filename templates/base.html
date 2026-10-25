@@ -17,12 +17,22 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav ms-auto">
+                                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="/invent/">Inventario - Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/invent/productos/">Inventario - Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clientes/">Clientes - Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clientes/clientes/">Clientes - Listado</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/">Django Admin</a></li>
+                    <li class="nav-item"><span class="navbar-text ms-lg-3 me-2">Hola, {{ user.username }}</span></li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
