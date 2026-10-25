@@ -4,5 +4,8 @@ from clientesApp import views as vclientes
 urlpatterns = [
     path('', vclientes.inicio, name="home_clientes"),
     path('clientes/', vclientes.clientes, name="home_clientes_listado"),
+    path('clientes/crear/', vclientes.crear_cliente, name="cliente_crear"),
+    path('clientes/<int:pk>/modificar/', vclientes.modificar_cliente, name="cliente_modificar"),
+    path('clientes/<int:pk>/eliminar/', vclientes.eliminar_cliente, name="cliente_eliminar"),
     path('ahora/', vclientes.ahora, name="ahora_clientes"),
 ]

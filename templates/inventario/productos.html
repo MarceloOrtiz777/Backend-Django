@@ -6,12 +6,19 @@
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <form class="d-flex" role="search" action="#" method="get">
-        <input class="form-control me-2" type="search" placeholder="Buscar producto..." aria-label="Buscar">
+    <form class="d-flex" role="search" action="{% url 'productos' %}" method="get">
+        <input class="form-control me-2" type="search" name="q" value="{{ q }}" placeholder="Buscar por nombre o categoría..." aria-label="Buscar">
         <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        {% if q %}<a href="{% url 'productos' %}" class="btn btn-link">Limpiar</a>{% endif %}
     </form>
-    <a href="#" class="btn btn-success">+ Agregar producto</a>
+    {% if perms.inventarioApp.add_producto %}
+    <a href="{% url 'producto_crear' %}" class="btn btn-success">+ Agregar producto</a>
+    {% endif %}
 </div>
+
+{% if q %}
+<p class="text-muted">Resultados para "<strong>{{ q }}</strong>": {{ productos|length }}</p>
+{% endif %}
 
 <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
@@ -23,7 +30,9 @@
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Estado</th>
+                {% if perms.inventarioApp.change_producto or perms.inventarioApp.delete_producto %}
                 <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -46,13 +55,19 @@
                         <span class="badge bg-success">{{ producto.estado_stock }}</span>
                     {% endif %}
                 </td>
+                {% if perms.inventarioApp.change_producto or perms.inventarioApp.delete_producto %}
                 <td class="text-nowrap">
-                    <a href="#" class="btn btn-sm btn-outline-primary">Modificar</a>
-                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    {% if perms.inventarioApp.change_producto %}
+                    <a href="{% url 'producto_modificar' producto.pk %}" class="btn btn-sm btn-outline-primary">Modificar</a>
+                    {% endif %}
+                    {% if perms.inventarioApp.delete_producto %}
+                    <a href="{% url 'producto_eliminar' producto.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             {% empty %}
-            <tr><td colspan="7" class="text-center">No hay productos registrados.</td></tr>
+            <tr><td colspan="7" class="text-center text-muted">No hay productos que mostrar.</td></tr>
             {% endfor %}
         </tbody>
     </table>

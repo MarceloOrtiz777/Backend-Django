@@ -12,7 +12,7 @@
                 {% if form.errors %}
                 <div class="alert alert-danger">Usuario o contraseña incorrectos. Inténtalo de nuevo.</div>
                 {% endif %}
-                {% if next %}
+                {% if next and not form.errors %}
                 <div class="alert alert-warning">Debes iniciar sesión para ver esa página.</div>
                 {% endif %}
 
