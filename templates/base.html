@@ -19,6 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="/invent/">Inventario - Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/invent/productos/">Inventario - Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clientes/">Clientes - Inicio</a></li>

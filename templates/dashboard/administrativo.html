@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Administrativo{% endblock %}
+{% block header %}Dashboard Administrativo{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Tus tareas del día: registrar pedidos y consultar información.</p>{% endblock %}
+
+{% block content %}
+<div class="alert alert-info">
+    Tu perfil permite consultar productos y clientes, y registrar pedidos.
+    Las operaciones de modificar y eliminar están restringidas.
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-5">{% include 'dashboard/_accesos.html' %}</div>
+    <div class="col-lg-7">{% include 'dashboard/_ultimos_pedidos.html' %}</div>
+</div>
+{% endblock %}

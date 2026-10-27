@@ -1,0 +1,23 @@
+<div class="card shadow-sm h-100">
+    <div class="card-header bg-white fw-bold">Accesos rápidos</div>
+    <div class="list-group list-group-flush">
+        {% if perms.inventarioApp.view_producto %}
+        <a href="{% url 'productos' %}" class="list-group-item list-group-item-action">Productos</a>
+        {% endif %}
+        {% if perms.inventarioApp.add_producto %}
+        <a href="{% url 'producto_crear' %}" class="list-group-item list-group-item-action">+ Agregar producto</a>
+        {% endif %}
+        {% if perms.clientesApp.view_cliente %}
+        <a href="{% url 'home_clientes_listado' %}" class="list-group-item list-group-item-action">Clientes</a>
+        {% endif %}
+        {% if perms.clientesApp.add_cliente %}
+        <a href="{% url 'cliente_crear' %}" class="list-group-item list-group-item-action">+ Agregar cliente</a>
+        {% endif %}
+        {% if perms.clientesApp.view_pedido %}
+        <a href="{% url 'pedidos' %}" class="list-group-item list-group-item-action">Pedidos</a>
+        {% endif %}
+        {% if perms.clientesApp.add_pedido %}
+        <a href="{% url 'pedido_crear' %}" class="list-group-item list-group-item-action fw-bold">+ Registrar pedido</a>
+        {% endif %}
+    </div>
+</div>

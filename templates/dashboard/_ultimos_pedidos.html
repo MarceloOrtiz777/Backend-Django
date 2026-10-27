@@ -1,0 +1,21 @@
+<div class="card shadow-sm h-100">
+    <div class="card-header bg-white fw-bold">Últimos pedidos</div>
+    <div class="table-responsive">
+        <table class="table table-sm mb-0 align-middle">
+            <thead><tr><th>N°</th><th>Cliente</th><th>Producto</th><th>Cant.</th><th>Total</th></tr></thead>
+            <tbody>
+                {% for pedido in ultimos_pedidos %}
+                <tr>
+                    <td>{{ pedido.pk }}</td>
+                    <td>{{ pedido.cliente }}</td>
+                    <td>{{ pedido.producto.nombre }}</td>
+                    <td>{{ pedido.cantidad }}</td>
+                    <td>${{ pedido.total }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center text-muted">Aún no hay pedidos.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

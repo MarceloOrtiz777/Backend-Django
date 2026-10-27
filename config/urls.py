@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from inventarioApp import views as vinventario
+
+from config.views import dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,5 +10,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('invent/', include('inventarioApp.urls')),
     path('clientes/', include('clientesApp.urls')),
-    path('', vinventario.inicio, name="home"),
+    path('', dashboard, name="home"),
 ]

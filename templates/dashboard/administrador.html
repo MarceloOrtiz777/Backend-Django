@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Administrador{% endblock %}
+{% block header %}Dashboard Administrador{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Visión global del sistema y acceso a todas las funciones.</p>{% endblock %}
+
+{% block content %}
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card text-bg-primary shadow-sm"><div class="card-body">
+            <div class="small">Productos</div><div class="fs-2 fw-bold">{{ total_productos }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card text-bg-success shadow-sm"><div class="card-body">
+            <div class="small">Clientes</div><div class="fs-2 fw-bold">{{ total_clientes }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card text-bg-info shadow-sm"><div class="card-body">
+            <div class="small">Pedidos</div><div class="fs-2 fw-bold">{{ total_pedidos }}</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card text-bg-dark shadow-sm"><div class="card-body">
+            <div class="small">Total vendido</div><div class="fs-2 fw-bold">${{ total_vendido }}</div>
+        </div></div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-lg-7">{% include 'dashboard/_ultimos_pedidos.html' %}</div>
+    <div class="col-lg-5">{% include 'dashboard/_stock_bajo.html' %}</div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-bold">Usuarios del sistema ({{ total_usuarios }})</div>
+            <ul class="list-group list-group-flush">
+                {% for nombre, cantidad in usuarios_por_perfil %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ nombre }}
+                    <span class="badge bg-secondary rounded-pill">{{ cantidad }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-7">{% include 'dashboard/_accesos.html' %}</div>
+</div>
+{% endblock %}
