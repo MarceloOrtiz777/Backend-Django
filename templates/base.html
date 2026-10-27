@@ -23,6 +23,9 @@
                     <li class="nav-item"><a class="nav-link" href="/invent/productos/">Inventario - Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clientes/">Clientes - Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clientes/clientes/">Clientes - Listado</a></li>
+                    {% if perms.clientesApp.view_pedido %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'pedidos' %}">Pedidos</a></li>
+                    {% endif %}
                     <li class="nav-item"><span class="navbar-text ms-lg-3 me-2">Hola, {{ user.username }}</span></li>
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}" class="d-inline">

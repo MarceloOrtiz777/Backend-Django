@@ -7,5 +7,8 @@ urlpatterns = [
     path('clientes/crear/', vclientes.crear_cliente, name="cliente_crear"),
     path('clientes/<int:pk>/modificar/', vclientes.modificar_cliente, name="cliente_modificar"),
     path('clientes/<int:pk>/eliminar/', vclientes.eliminar_cliente, name="cliente_eliminar"),
+    path('pedidos/', vclientes.pedidos, name="pedidos"),
+    path('pedidos/nuevo/', vclientes.crear_pedido, name="pedido_crear"),
+    path('pedidos/<int:pk>/anular/', vclientes.anular_pedido, name="pedido_anular"),
     path('ahora/', vclientes.ahora, name="ahora_clientes"),
 ]

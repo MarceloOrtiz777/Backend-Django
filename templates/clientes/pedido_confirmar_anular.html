@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Anular pedido{% endblock %}
+{% block header %}Anular pedido{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title">¿Seguro que quieres anular el pedido #{{ pedido.pk }}?</h5>
+                <p class="card-text mb-1"><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+                <p class="card-text mb-1"><strong>Producto:</strong> {{ pedido.producto.nombre }}</p>
+                <p class="card-text mb-3"><strong>Cantidad:</strong> {{ pedido.cantidad }} (total ${{ pedido.total }})</p>
+                <div class="alert alert-info">
+                    Se devolverán {{ pedido.cantidad }} unidad(es) al stock del producto.
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Sí, anular pedido</button>
+                    <a href="{% url 'pedidos' %}" class="btn btn-outline-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
