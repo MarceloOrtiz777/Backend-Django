@@ -3,7 +3,9 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Cliente
+from inventarioApp.models import Producto
+
+from .models import Cliente, Pedido
 
 SOLO_LETRAS = re.compile(r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$")
 
@@ -54,3 +56,46 @@ class ClienteForm(forms.ModelForm):
         if not coincide:
             raise ValidationError('Ingresa un celular chileno válido, por ejemplo +56 9 1234 5678.')
         return f'+56{coincide.group(1)}'
+
+
+class PedidoForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = ['cliente', 'producto', 'cantidad']
+        labels = {
+            'cliente': 'Cliente',
+            'producto': 'Producto',
+            'cantidad': 'Cantidad',
+        }
+        widgets = {
+            'cliente': forms.Select(attrs={'class': 'form-select'}),
+            'producto': forms.Select(attrs={'class': 'form-select'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cliente'].empty_label = 'Selecciona un cliente'
+        self.fields['producto'].empty_label = 'Selecciona un producto'
+        # Solo se ofrecen productos que tengan stock disponible.
+        self.fields['producto'].queryset = Producto.objects.filter(stock__gt=0)
+        self.fields['producto'].label_from_instance = (
+            lambda p: f'{p.nombre} — ${p.precio} (stock: {p.stock})'
+        )
+
+    def clean_cantidad(self):
+        cantidad = self.cleaned_data['cantidad']
+        if cantidad < 1:
+            raise ValidationError('La cantidad debe ser al menos 1.')
+        return cantidad
+
+    def clean(self):
+        datos = super().clean()
+        producto = datos.get('producto')
+        cantidad = datos.get('cantidad')
+        if producto and cantidad and cantidad > producto.stock:
+            self.add_error(
+                'cantidad',
+                f'Stock insuficiente: solo quedan {producto.stock} unidad(es) de "{producto.nombre}".',
+            )
+        return datos
