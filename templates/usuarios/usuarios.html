@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuarios{% endblock %}
+{% block header %}Gestión de Usuarios{% endblock %}
+{% block subheader %}<p class="text-muted mb-0">Crea usuarios y asígnales un perfil. Cada perfil define qué puede hacer en el sistema.</p>{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form class="d-flex" role="search" action="{% url 'usuarios' %}" method="get">
+        <input class="form-control me-2" type="search" name="q" value="{{ q }}" placeholder="Buscar por usuario, nombre o correo..." aria-label="Buscar">
+        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        {% if q %}<a href="{% url 'usuarios' %}" class="btn btn-link">Limpiar</a>{% endif %}
+    </form>
+    {% if perms.auth.add_user %}
+    <a href="{% url 'usuario_crear' %}" class="btn btn-success">+ Agregar usuario</a>
+    {% endif %}
+</div>
+
+{% if q %}
+<p class="text-muted">Resultados para "<strong>{{ q }}</strong>": {{ filas|length }}</p>
+{% endif %}
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Perfil</th>
+                <th>Estado</th>
+                <th>Último acceso</th>
+                {% if perms.auth.change_user %}<th>Acciones</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in filas %}
+            <tr>
+                <td><strong>{{ fila.usuario.username }}</strong></td>
+                <td>{{ fila.usuario.get_full_name|default:"—" }}</td>
+                <td>{{ fila.usuario.email|default:"—" }}</td>
+                <td>
+                    {% if fila.perfil %}
+                        <span class="badge bg-primary">{{ fila.perfil }}</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Sin perfil</span>
+                    {% endif %}
+                    {% if fila.usuario.is_superuser %}<span class="badge bg-dark">Superusuario</span>{% endif %}
+                </td>
+                <td>
+                    {% if fila.usuario.is_active %}
+                        <span class="badge bg-success">Activo</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inactivo</span>
+                    {% endif %}
+                </td>
+                <td>{{ fila.usuario.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</td>
+                {% if perms.auth.change_user %}
+                <td class="text-nowrap">
+                    {% if not fila.usuario.is_superuser or user.is_superuser %}
+                    <a href="{% url 'usuario_editar' fila.usuario.pk %}" class="btn btn-sm btn-outline-primary">Modificar</a>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="text-center text-muted">No hay usuarios que mostrar.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

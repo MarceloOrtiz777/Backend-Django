@@ -14,7 +14,7 @@ STOCK_BAJO = 5
 
 def perfil_de(user):
     """Devuelve el perfil del usuario según su grupo (o None si no tiene ninguno)."""
-    grupos = set(user.groups.values_list('name', flat=True))
+    grupos = {g.name for g in user.groups.all()}
     if user.is_superuser or 'Administrador' in grupos:
         return 'Administrador'
     if 'Supervisor' in grupos:

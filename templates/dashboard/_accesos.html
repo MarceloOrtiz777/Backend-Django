@@ -19,5 +19,11 @@
         {% if perms.clientesApp.add_pedido %}
         <a href="{% url 'pedido_crear' %}" class="list-group-item list-group-item-action fw-bold">+ Registrar pedido</a>
         {% endif %}
+        {% if perms.auth.view_user %}
+        <a href="{% url 'usuarios' %}" class="list-group-item list-group-item-action">Usuarios</a>
+        {% endif %}
+        {% if perms.auth.add_user %}
+        <a href="{% url 'usuario_crear' %}" class="list-group-item list-group-item-action">+ Agregar usuario</a>
+        {% endif %}
     </div>
 </div>
